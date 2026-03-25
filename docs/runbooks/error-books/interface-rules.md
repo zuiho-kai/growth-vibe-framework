@@ -1,24 +1,21 @@
-# 错题本 — 接口协作（通用/接口 + 前端/接口）
+# 错题本 — 接口协作
 
 ### 记录规则
 
 - **条目只写核心规则**（❌/✅/一句话解释），控制在 **5 行以内**
-- 详细复盘放 `../postmortems/`，这里只放链接
+- 详细复盘放独立 postmortem 文件，这里只放链接
 
 ### DEV-1 后端终端改了前端文件 `🟢`
 
-❌ 后端终端修改 `web/src/components/Chat.tsx`
-✅ 后端终端只改 `server/`，前端问题通知前端终端处理
-> 职责分离，避免冲突。
+❌ 后端开发时顺手改了前端文件
+✅ 每个终端只改自己职责范围内的文件，需要跨界时通知对应角色
 
 ### DEV-2 改接口没更新契约文档 `🟢`
 
-❌ 后端改了 `/api/agents` 的返回格式，没更新 `docs/api-contract.md`
-✅ 改接口的同时更新 `docs/api-contract.md`，通知前端终端
-> api-contract.md 是前后端唯一的协作边界。
+❌ 改了 API 接口，契约文档没同步更新
+✅ 改接口 = 同时更新契约文档，缺一不可
 
-### DEV-11 前端凭记忆写后端接口信息 → 运行时全量不匹配 `🟡中频×2`
+### DEV-11c 前端凭记忆写后端接口信息 `🟡中频×2`
 
-❌ types.ts 字段名凭记忆写；api.ts 路径/method/param 凭记忆拼 — 字段差一字母=undefined，路径差一段=404
-✅ 写前端 API 层和类型时必须打开后端路由+schema 文件逐条比对：字段名、类型、可选性、URL path、HTTP method、param 位置、response 字段名
-> 两次复犯（DEV-11 字段层、DEV-22 路径层）。详见 [postmortem-dev-bug-17.md](../postmortems/postmortem-dev-bug-17.md)
+❌ 前端凭记忆写后端 API 路径/字段名，运行时全量不匹配
+✅ 前端调后端接口前，先 Read 后端路由文件确认路径和 schema，不凭记忆
